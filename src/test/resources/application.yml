@@ -1,0 +1,10 @@
+spring:
+  profiles.active: test
+  datasource.username: TEST
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    generate-ddl: true
+    hibernate.ddl-auto: create
+  flyway.enabled: false
+  sql.init.platform: h2
