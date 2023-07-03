@@ -29,32 +29,32 @@ public class Price {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PRICE_ID")
+    @Column(name = "PRICE_ID", nullable = false)
     private Long id;
 
-    @Column(name = "BRAND_ID")
+    @Column(name = "BRAND_ID", nullable = false)
     private Long brandId;
 
-    @Column(name = "START_DATE")
+    @Column(name = "START_DATE", nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "END_DATE")
+    @Column(name = "END_DATE", nullable = false)
     private LocalDateTime endDate;
 
-    @Column(name = "PRICE_LIST")
+    @Column(name = "PRICE_LIST", nullable = false)
     private Long priceList;
 
-    @Column(name = "PRODUCT_ID")
+    @Column(name = "PRODUCT_ID", nullable = false)
     private Long productId;
 
-    @Column(name = "PRIORITY")
+    @Column(name = "PRIORITY", nullable = false)
     private Boolean priority;
 
-    @Column(name = "PRICE")
+    @Column(name = "PRICE", nullable = false, precision = 18, scale = 2)
     private BigDecimal finalPrice;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "CURR")
+    @Column(name = "CURR", nullable = false, length = 3)
     private Currency currency;
 
     @Override

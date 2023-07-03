@@ -1,5 +1,6 @@
 package com.inditex.pricesdemo.rest;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +27,7 @@ class PriceControllerIntTest {
     MockMvc mockMvc;
 
     @Test
+    @DisplayName("Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)")
     void getByParams1() throws Exception {
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
                 .param("date", "2020-06-14T10:00:00")
@@ -36,10 +38,16 @@ class PriceControllerIntTest {
         mockMvc.perform(getRequest)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.priceList", is(1)));
+                .andExpect(jsonPath("$.productId", is(35455)))
+                .andExpect(jsonPath("$.brandId", is(1)))
+                .andExpect(jsonPath("$.priceList", is(1)))
+                .andExpect(jsonPath("$.startDate", is("2020-06-14T00:00:00")))
+                .andExpect(jsonPath("$.endDate", is("2020-12-31T23:59:59")))
+                .andExpect(jsonPath("$.finalPrice", is(35.50)));
     }
 
     @Test
+    @DisplayName("Test 2: petición a las 16:00 del día 14 del producto 35455 para la brand 1 (ZARA)")
     void getByParams2() throws Exception {
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
                 .param("date", "2020-06-14T16:00:00")
@@ -50,10 +58,16 @@ class PriceControllerIntTest {
         mockMvc.perform(getRequest)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.priceList", is(2)));
+                .andExpect(jsonPath("$.productId", is(35455)))
+                .andExpect(jsonPath("$.brandId", is(1)))
+                .andExpect(jsonPath("$.priceList", is(2)))
+                .andExpect(jsonPath("$.startDate", is("2020-06-14T15:00:00")))
+                .andExpect(jsonPath("$.endDate", is("2020-06-14T18:30:00")))
+                .andExpect(jsonPath("$.finalPrice", is(25.45)));
     }
 
     @Test
+    @DisplayName("Test 3: petición a las 21:00 del día 14 del producto 35455 para la brand 1 (ZARA)")
     void getByParams3() throws Exception {
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
                 .param("date", "2020-06-14T21:00:00")
@@ -64,10 +78,16 @@ class PriceControllerIntTest {
         mockMvc.perform(getRequest)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.priceList", is(1)));
+                .andExpect(jsonPath("$.productId", is(35455)))
+                .andExpect(jsonPath("$.brandId", is(1)))
+                .andExpect(jsonPath("$.priceList", is(1)))
+                .andExpect(jsonPath("$.startDate", is("2020-06-14T00:00:00")))
+                .andExpect(jsonPath("$.endDate", is("2020-12-31T23:59:59")))
+                .andExpect(jsonPath("$.finalPrice", is(35.50)));
     }
 
     @Test
+    @DisplayName("Test 4: petición a las 10:00 del día 15 del producto 35455 para la brand 1 (ZARA)")
     void getByParams4() throws Exception {
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
                 .param("date", "2020-06-15T10:00:00")
@@ -78,10 +98,16 @@ class PriceControllerIntTest {
         mockMvc.perform(getRequest)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.priceList", is(3)));
+                .andExpect(jsonPath("$.productId", is(35455)))
+                .andExpect(jsonPath("$.brandId", is(1)))
+                .andExpect(jsonPath("$.priceList", is(3)))
+                .andExpect(jsonPath("$.startDate", is("2020-06-15T00:00:00")))
+                .andExpect(jsonPath("$.endDate", is("2020-06-15T11:00:00")))
+                .andExpect(jsonPath("$.finalPrice", is(30.50)));
     }
 
     @Test
+    @DisplayName("Test 5: petición a las 21:00 del día 16 del producto 35455 para la brand 1 (ZARA)")
     void getByParams5() throws Exception {
         MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
                 .param("date", "2020-06-16T21:00:00")
@@ -92,6 +118,11 @@ class PriceControllerIntTest {
         mockMvc.perform(getRequest)
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.priceList", is(4)));
+                .andExpect(jsonPath("$.productId", is(35455)))
+                .andExpect(jsonPath("$.brandId", is(1)))
+                .andExpect(jsonPath("$.priceList", is(4)))
+                .andExpect(jsonPath("$.startDate", is("2020-06-15T16:00:00")))
+                .andExpect(jsonPath("$.endDate", is("2020-12-31T23:59:59")))
+                .andExpect(jsonPath("$.finalPrice", is(38.95)));
     }
 }

@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ITXADM;INIT=CREATE SCHEMA IF NOT EXISTS ITXADM
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ITXADM
+    hibernate.ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
