@@ -125,4 +125,49 @@ class PriceControllerIntTest {
                 .andExpect(jsonPath("$.endDate", is("2020-12-31T23:59:59")))
                 .andExpect(jsonPath("$.finalPrice", is(38.95)));
     }
+
+    @Test
+    @DisplayName("Lanza excepción si no encuentra un precio con parámetros de búsqueda introducidos")
+    void getByParamsThrowsResourceNotFoundException() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
+                .param("date", "2020-06-16T21:00:00")
+                .param("productId", "35455")
+                .param("brandId", "2")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("No se ha podido encontrar un precio con parámetros de búsqueda introducidos")));
+    }
+
+    @Test
+    @DisplayName("Lanza excepción con parámetros de búsqueda incorrectos")
+    void getByParamsThrowsMethodArgumentTypeMismatchException() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.get("/prices")
+                .param("date", "2020-16-16T21:00:00")
+                .param("productId", "35455")
+                .param("brandId", "1")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is(400)))
+                .andExpect(jsonPath("$.message", is("Los parámetros de búsqueda son incorrectos")));
+    }
+
+    @Test
+    @DisplayName("Lanza excepción con petición POST no implementada")
+    void getByParamsThrowsHttpRequestMethodNotSupportedException() throws Exception {
+        MockHttpServletRequestBuilder getRequest = MockMvcRequestBuilders.post("/prices")
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isMethodNotAllowed())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status", is(405)))
+                .andExpect(jsonPath("$.message", is("La operación solicitada no está implementada")));
+    }
 }

@@ -1,6 +1,8 @@
 package com.inditex.pricesdemo.service;
 
+import com.inditex.pricesdemo.constants.ErrorConstants;
 import com.inditex.pricesdemo.domain.QPrice;
+import com.inditex.pricesdemo.error.exception.ResourceNotFoundException;
 import com.inditex.pricesdemo.repository.PriceRepository;
 import com.inditex.pricesdemo.rest.dto.PriceDto;
 import com.inditex.pricesdemo.service.mapper.PriceMapper;
@@ -32,7 +34,7 @@ public class PriceServiceImpl extends FilterOperation implements PriceService {
         return StreamSupport.stream(priceRepository.findAll(predicate, sort).spliterator(), PARALLEL)
                 .findFirst()
                 .map(priceMapper::toDto)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorConstants.PRICE_NOT_FOUND));
     }
 
     private BooleanBuilder getPredicate(LocalDateTime date, Long productId, Long brandId) {

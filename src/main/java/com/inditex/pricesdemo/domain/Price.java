@@ -48,7 +48,7 @@ public class Price {
     private Long productId;
 
     @Column(name = "PRIORITY", nullable = false)
-    private Boolean priority;
+    private Integer priority;
 
     @Column(name = "PRICE", nullable = false, precision = 18, scale = 2)
     private BigDecimal finalPrice;

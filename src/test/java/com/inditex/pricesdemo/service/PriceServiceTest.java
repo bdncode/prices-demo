@@ -1,6 +1,7 @@
 package com.inditex.pricesdemo.service;
 
 import com.inditex.pricesdemo.domain.Price;
+import com.inditex.pricesdemo.error.exception.ResourceNotFoundException;
 import com.inditex.pricesdemo.fixture.PriceFixtures;
 import com.inditex.pricesdemo.repository.PriceRepository;
 import com.inditex.pricesdemo.rest.dto.PriceDto;
@@ -33,7 +34,7 @@ class PriceServiceTest {
     PriceServiceImpl underTest;
 
     @Test
-    @DisplayName("Busca un precio por sus parámetros")
+    @DisplayName("Busca un precio por sus parámetros correctamente")
     void getAll() {
         Price price = PriceFixtures.getPrice();
         Mockito.when(priceRepository.findAll(ArgumentMatchers.any(BooleanBuilder.class), ArgumentMatchers.any(Sort.class)))
@@ -57,6 +58,7 @@ class PriceServiceTest {
                 .thenReturn(Collections.emptyList());
 
         Assertions.assertThatThrownBy(() -> underTest.getByParams(null, null, null))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("No se ha podido encontrar un precio con parámetros de búsqueda introducidos");
     }
 }
